@@ -1,45 +1,8 @@
 use std::env;
 use std::fs::File;
 use std::io::prelude::*;
-use std::str::FromStr;
 
-#[derive(Debug)]
-enum TokenType {
-    Let,
-    Identifier,
-    Assign,
-    String,
-}
-
-#[derive(Debug)]
-struct Token {
-    pub token_type: TokenType,
-    pub literal: String,
-}
-
-impl Token {
-    pub fn new(token_type: TokenType, value: &str) -> Token {
-        Token {
-            token_type,
-            literal: String::from(value),
-        }
-    }
-}
-
-#[derive(Debug)]
-struct Lexer {
-    tokens: Vec<Token>,
-}
-
-impl Lexer {
-    pub fn new(contents: &str) -> Lexer {
-        let mut tokens: Vec<Token> = vec![];
-        let token = Token::new(TokenType::String, "bar");
-        tokens.push(token);
-
-        Lexer { tokens: tokens }
-    }
-}
+mod lexer;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -55,9 +18,9 @@ fn main() {
     let mut contents = String::new();
     match file.read_to_string(&mut contents) {
         Err(why) => panic!("couldn't read {}: {}", path, why),
-        Ok(_) => println!("{} contains:\n{}", path, contents),
+        Ok(_) => {},
     }
 
-    let lexer = Lexer::new(&contents);
-    println!("{:?}", lexer);
+    let mut lx = lexer::Lexer::new(&contents);
+    lx.lex();
 }
