@@ -1,1 +1,9 @@
-/target
+# Binaries for programs and plugins
+main
+kala
+*.exe
+*.exe~
+*.so
+*.dylib
+*.dll
+vls.log
